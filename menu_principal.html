@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortuna Familiar - Menú Principal</title>
+    <link rel="stylesheet" href="style_menuPrincipal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header class="main-header">
+            <h1 class="logo-title">FORTUNA<br><span>FAMILIAR</span></h1>
+            <p class="tagline">Especulación y Estrategia en Tiempo Real</p>
+        </header>
+
+        <div class="avatar-selection card-glass">
+            <h3>Selecciona tu Perfil</h3>
+            <div class="avatar-grid" id="avatar-grid">
+                
+                <div class="avatar-item active" data-perfil="Papá">
+                    <div class="avatar-circle">🧔</div>
+                    <span>Papá</span>
+                </div>
+                
+                <div class="avatar-item" data-perfil="Hijo">
+                    <div class="avatar-circle">👦</div>
+                    <span>Hijo</span>
+                </div>
+                
+                <div class="avatar-item" data-perfil="Hermano">
+                    <div class="avatar-circle">👨</div>
+                    <span>Hermano</span>
+                </div>
+                
+                <div class="avatar-item" data-perfil="Cuñado">
+                    <div class="avatar-circle">🧑</div>
+                    <span>Cuñado</span>
+                </div>
+            </div>
+            
+            <input type="text" id="player-name" placeholder="Escribe tu apodo..." class="input-name">
+        </div>
+
+        <div class="menu-actions">
+            <button class="btn btn-primary">CREAR SALA MULTIJUGADOR</button>
+            <button class="btn btn-secondary">UNIRSE A PARTIDA</button>
+            <button class="btn btn-outline">CÓMO JUGAR</button>
+        </div>
+
+        <footer class="footer-info">
+            <p>Conectado: <span>Bogotá - En Línea</span></p>
+        </div>
+    </div>
+    <script src="motor_juego.js"></script>
+</body>
+</html>

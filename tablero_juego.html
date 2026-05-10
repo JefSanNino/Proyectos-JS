@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortuna Familiar - En Vivo</title>
+    <link rel="stylesheet" href="style_tablero.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="game-container">
+        <header class="game-header card-glass">
+            <div class="player-info">
+                <div class="mini-avatar"></div>
+                <div>
+                    <p class="label">Capital Actual</p>
+                    <h2 id="balance" class="amount">$10,000</h2>
+                </div>
+            </div>
+            <div class="game-stats">
+                <p class="label">Año 1/10</p>
+                <div id="timer-seconds" class="timer">30s</div>
+            </div>
+        </header>
+
+        <section class="news-section card-glass border-glow">
+            <div class="news-badge">BREAKING NEWS</div>
+            <h3 id="news-text">"Rumores de escasez de semiconductores por tensiones en el Pacífico"</h3>
+            <p class="news-hint">¿Cómo reaccionará el mercado este año?</p>
+        </section>
+
+        <main class="assets-grid">
+            <div class="asset-card card-glass tech">
+                <div class="asset-icon">💻</div>
+                <h4>Tecnología</h4>
+                <div class="allocation-info">
+                    <span id="tech-pct">0%</span>
+                </div>
+                <input type="range" class="slider" min="0" max="100" value="0">
+            </div>
+
+            <div class="asset-card card-glass food">
+                <div class="asset-icon">🍎</div>
+                <h4>Alimentos</h4>
+                <div class="allocation-info">
+                    <span id="food-pct">0%</span>
+                </div>
+                <input type="range" class="slider" min="0" max="100" value="0">
+            </div>
+
+            <div class="asset-card card-glass energy">
+                <div class="asset-icon">🚀</div>
+                <h4>Energía</h4>
+                <div class="allocation-info">
+                    <span id="energy-pct">0%</span>
+                </div>
+                <input type="range" class="slider" min="0" max="100" value="0">
+            </div>
+
+            <div class="asset-card card-glass realestate">
+                <div class="asset-icon">🏠</div>
+                <h4>Propiedades</h4>
+                <div class="allocation-info">
+                    <span id="re-pct">0%</span>
+                </div>
+                <input type="range" class="slider" min="0" max="100" value="0">
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <button class="btn btn-primary btn-confirm">CONFIRMAR ESTRATEGIA</button>
+        </div>
+    </div>
+    <script src="motor_juego.js"></script>
+</body>
+</html>

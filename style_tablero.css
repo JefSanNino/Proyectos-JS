@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #020617;
+    background-image: radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.5) 0, transparent 50%), 
+                      radial-gradient(at 50% 0%, rgba(76, 29, 149, 0.5) 0, transparent 50%);
+    color: white;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+.game-container {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 15px;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.player-info { display: flex; align-items: center; gap: 10px; }
+.mini-avatar { width: 40px; height: 40px; background: #facc15; border-radius: 12px; }
+.label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; }
+.amount { color: #4ade80; font-size: 1.4rem; }
+.timer { font-family: monospace; font-size: 1.2rem; color: #fb923c; }
+
+/* Sección Noticias */
+.news-section {
+    margin-bottom: 25px;
+    border-left: 4px solid #facc15;
+}
+
+.news-badge {
+    background: #facc15;
+    color: #000;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.news-hint {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* Grilla de Activos */
+.assets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.asset-card {
+    text-align: center;
+    transition: 0.3s;
+}
+
+.asset-icon { font-size: 1.8rem; margin-bottom: 5px; }
+.asset-card h4 { font-size: 0.9rem; margin-bottom: 10px; color: #cbd5e1; }
+
+.allocation-info {
+    font-weight: 700;
+    color: #60a5fa;
+    margin-bottom: 10px;
+}
+
+/* Estilo del Slider */
+.slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    appearance: none;
+    background: #1e293b;
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Botón Final */
+.btn-confirm {
+    width: 100%;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 15px;
+    border: none;
+    background: #3b82f6;
+    color: white;
+    font-weight: 800;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
