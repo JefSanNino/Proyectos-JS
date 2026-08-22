@@ -1,0 +1,102 @@
+rules_version = '2';
+
+// =====================================================
+// REGLAS DE SEGURIDAD — Fortuna Familiar v3.0
+//
+// Pega este contenido en: Firebase Console →
+// Firestore Database → Reglas → Publicar.
+//
+// Garantías:
+//  - Solo usuarios autenticados (anónimos) acceden.
+//  - Cada jugador SOLO escribe su propio documento en
+//    salas/{codigo}/jugadores/{suPropioUid}.
+//  - Solo el anfitrión controla el estado de la sala
+//    (iniciar partida, avanzar rondas, cerrar sala).
+//  - Validación de tipos, longitudes y rangos numéricos
+//    para impedir datos maliciosos o corruptos.
+// =====================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function firmado() {
+      return request.auth != null;
+    }
+
+    function codigoValido(codigo) {
+      return codigo is string && codigo.size() == 6;
+    }
+
+    match /salas/{codigo} {
+
+      // Lectura: cualquier usuario autenticado que conozca el código
+      allow read: if firmado() && codigoValido(codigo);
+
+      // Creación: el creador es anfitrión y la sala nace limpia
+      allow create: if firmado()
+        && codigoValido(codigo)
+        && request.resource.data.keys().hasOnly(
+             ['hostUid', 'estado', 'rondaActual', 'totalRondas', 'noticias', 'creadoEn'])
+        && request.resource.data.hostUid == request.auth.uid
+        && request.resource.data.estado == 'esperando'
+        && request.resource.data.rondaActual == 0
+        && request.resource.data.totalRondas == 10
+        && request.resource.data.noticias is list
+        && request.resource.data.noticias.size() == 10;
+
+      // Actualización: SOLO el anfitrión, sin cambiar quién es el anfitrión
+      allow update: if firmado()
+        && resource.data.hostUid == request.auth.uid
+        && request.resource.data.hostUid == resource.data.hostUid
+        && request.resource.data.estado in ['esperando', 'jugando', 'finalizada']
+        && request.resource.data.rondaActual is int
+        && request.resource.data.rondaActual >= 0
+        && request.resource.data.rondaActual <= 9;
+
+      // Borrado: solo el anfitrión puede cerrar su sala
+      allow delete: if firmado()
+        && resource.data.hostUid == request.auth.uid;
+
+      // ----- Documentos de jugadores -----
+      match /jugadores/{uid} {
+
+        allow read: if firmado();
+
+        // Creación: cada quien crea su propio documento,
+        // solo mientras la sala está en lobby
+        allow create: if firmado()
+          && request.auth.uid == uid
+          && get(/databases/$(database)/documents/salas/$(codigo)).data.estado == 'esperando'
+          && validaJugador();
+
+        // Actualización: cada quien actualiza SOLO lo suyo,
+        // con validación estricta de campos y rangos
+        allow update: if firmado()
+          && request.auth.uid == uid
+          && validaJugador();
+
+        // Borrado: cada quien puede salir de la sala
+        allow delete: if firmado() && request.auth.uid == uid;
+
+        function validaJugador() {
+          return request.resource.data.nombre is string
+            && request.resource.data.nombre.size() >= 1
+            && request.resource.data.nombre.size() <= 20
+            && request.resource.data.avatarEmoji is string
+            && request.resource.data.avatarEmoji.size() <= 8
+            && request.resource.data.avatarPerfil is string
+            && request.resource.data.avatarPerfil.size() <= 20
+            && request.resource.data.capital is number
+            && request.resource.data.capital >= 0
+            && request.resource.data.capital <= 1000000000
+            && request.resource.data.rondaConfirmada is int
+            && request.resource.data.rondaConfirmada >= -1
+            && request.resource.data.rondaConfirmada <= 9
+            && request.resource.data.netoUltima is number
+            && request.resource.data.netoUltima >= -1000000000
+            && request.resource.data.netoUltima <= 1000000000;
+        }
+      }
+    }
+  }
+}
