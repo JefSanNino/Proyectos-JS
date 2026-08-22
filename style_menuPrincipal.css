@@ -18,7 +18,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 450px; /* Tamaño ideal para móvil */
+    max-width: 450px;
     text-align: center;
 }
 
@@ -41,7 +41,20 @@ body {
 .tagline {
     font-size: 0.9rem;
     color: #94a3b8;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
+}
+
+/* Chip de perfil recordado */
+.chip-perfil {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #86efac;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 18px;
 }
 
 /* Tarjeta Glassmorphism */
@@ -68,42 +81,25 @@ body {
     margin-bottom: 20px;
 }
 
-/*.avatar-circle {
-    width: 60px;
-    height: 60px;
-    background: #334155;
-    border-radius: 50%;
-    margin: 0 auto 8px;
-    border: 3px solid transparent;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.avatar-item span {
-    font-size: 0.7rem;
-    color: #94a3b8;
-}
-
-.avatar-item.active .avatar-circle {
-    border-color: #facc15;
-    box-shadow: 0 0 15px rgba(250, 204, 21, 0.5);
-}*/
-/* --- ACTUALIZACIÓN DE AVATARES --- */
 .avatar-circle {
     width: 60px;
     height: 60px;
-    background: #1e293b; /* Un gris azulado más oscuro */
+    background: #1e293b;
     border-radius: 50%;
     margin: 0 auto 8px;
     border: 3px solid transparent;
-    transition: all 0.2s ease-in-out; /* Animación suave */
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
-    
+
     /* Centrado perfecto para el emoji */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem; /* Tamaño del emoji */
+    font-size: 2rem;
+}
+
+.avatar-item {
+    cursor: pointer;
 }
 
 /* Efecto Hover (al pasar el mouse) */
@@ -159,6 +155,12 @@ body {
     box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
 }
 
+.btn-online {
+    background: linear-gradient(90deg, #8b5cf6, #6366f1);
+    color: white;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.35);
+}
+
 .btn-secondary {
     background: #3b82f6;
     color: white;
@@ -173,3 +175,196 @@ body {
 .btn:active {
     transform: scale(0.95);
 }
+
+/* Botón de reconexión a sala recordada */
+.btn-reanudar {
+    background: rgba(250, 204, 21, 0.12);
+    border: 1px solid rgba(250, 204, 21, 0.5);
+    color: #fde047;
+}
+
+.btn-reanudar:hover {
+    background: rgba(250, 204, 21, 0.22);
+}
+
+/* Fila de unión a sala */
+.join-row {
+    display: flex;
+    gap: 10px;
+    padding: 12px !important;
+    border-radius: 20px !important;
+    align-items: stretch;
+}
+
+.join-row .btn-secondary {
+    width: auto;
+    padding: 12px 22px;
+    border-radius: 14px;
+}
+
+.input-codigo {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(96, 165, 250, 0.4);
+    background: rgba(15, 23, 42, 0.9);
+    color: #60a5fa;
+    text-align: center;
+    outline: none;
+    font-weight: 800;
+    letter-spacing: 6px;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+}
+
+.input-codigo::placeholder {
+    letter-spacing: 2px;
+    color: #475569;
+}
+
+.input-codigo:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.3);
+}
+
+/* Lobby en línea */
+.lobby {
+    border: 1px solid rgba(139, 92, 246, 0.45);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.15);
+}
+
+.lobby-codigo-label {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.lobby-codigo {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 10px;
+    color: #c4b5fd;
+    text-shadow: 0 0 18px rgba(139, 92, 246, 0.55);
+    margin-bottom: 12px;
+}
+
+.lobby-acciones { margin-bottom: 16px; }
+
+.btn-mini {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #cbd5e1;
+    border-radius: 12px;
+    padding: 8px 14px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-mini:hover { background: rgba(255, 255, 255, 0.08); }
+
+.btn-mini.salir {
+    border-color: rgba(248, 113, 113, 0.5);
+    color: #fca5a5;
+    margin-top: 12px;
+}
+
+.lobby-jugadores {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 16px;
+    display: grid;
+    gap: 8px;
+}
+
+.lobby-jugadores li {
+    background: rgba(15, 23, 42, 0.65);
+    border-radius: 12px;
+    padding: 9px 14px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lobby-jugadores .host-tag {
+    font-size: 0.62rem;
+    font-weight: 800;
+    background: #facc15;
+    color: #000;
+    border-radius: 6px;
+    padding: 2px 7px;
+}
+
+.lobby-espera {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    animation: pulso 1.6s infinite;
+}
+
+@keyframes pulso { 50% { opacity: 0.45; } }
+
+/* Modal CÓMO JUGAR */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(6px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.modal-overlay.abierto { display: flex; }
+
+.modal-card {
+    max-width: 480px;
+    max-height: 88vh;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 25px !important;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.modal-header h2 { color: #facc15; font-size: 1.4rem; }
+
+.modal-cerrar {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.modal-body h4 {
+    color: #93c5fd;
+    margin: 16px 0 6px;
+    font-size: 0.95rem;
+}
+
+.modal-body p,
+.modal-body li {
+    color: #cbd5e1;
+    font-size: 0.83rem;
+    line-height: 1.55;
+}
+
+.modal-body ul, .modal-body ol {
+    padding-left: 20px;
+    display: grid;
+    gap: 5px;
+}
+
+.modal-footer { margin-top: 20px; }
+
+/* El atributo hidden siempre gana sobre cualquier display de clase */
+[hidden] { display: none !important; }

@@ -5,33 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fortuna Familiar - Resultados</title>
     <link rel="stylesheet" href="style_resultados.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-pagina="resultados">
 
-    <div class="results-container">
+    <div class="results-container" id="resultados-ronda">
         <header class="results-header">
-            <h1 id="round-title" class="round-title">CIERRE DE AÑO...</h1>
-            <p class="market-status">El mercado ha reaccionado...</p>
+            <h1 id="round-title" class="round-title">CIERRE DE AÑO…</h1>
+            <p class="market-status">El mercado ha reaccionado…</p>
         </header>
 
-        <!-- Sección de Noticia con Explicación -->
+        <!-- Noticia y explicación -->
         <section class="noticia-contenedor">
-            <h2 id="titular-noticia" class="noticia__titular">Cargando noticia...</h2>
-            <p id="explicacion-noticia" class="noticia__descripcion">Aquí aparecerá el porqué de la variación del mercado.</p>
+            <h2 id="titular-noticia" class="noticia__titular">Cargando noticia…</h2>
+            <p id="explicacion-noticia" class="noticia__descripcion">Aquí aparece el porqué de la variación del mercado.</p>
         </section>
+
+        <!-- Desglose por activo (⚡ afectado por la noticia / ~ ruido de mercado) -->
+        <section id="sector-breakdown" class="sector-breakdown" aria-label="Desglose por activo"></section>
 
         <hr class="separador">
 
-        <!-- Sección de Desglose Financiero -->
+        <!-- Desglose financiero -->
         <section class="balance-contenedor">
             <div class="balance__item">
                 <span>Capital Anterior:</span>
                 <span id="capital-anterior">$0.00</span>
             </div>
-            
-            <!-- Este es el nuevo campo clave que pediste -->
-            <div id="contenedor-resultado-neto" class="balance__resultado">
+
+            <div class="balance__resultado">
                 <span id="etiqueta-resultado">Resultado de la ronda:</span>
                 <span id="valor-resultado-neto">$0.00</span>
             </div>
@@ -42,13 +45,26 @@
             </div>
         </section>
 
-        <!-- Sección del Jugador (Podio) -->
-        <footer class="podio-contenedor">
-            <p class="podio__texto">Jugador actual: <strong id="nombre-jugador-display">---</strong></p>
-        </footer>
+        <!-- Clasificación en vivo (solo multijugador) -->
+        <section id="clasificacion-seccion" class="card-clara" hidden>
+            <h3 class="clasi-titulo">📊 Clasificación en vivo</h3>
+            <div id="clasificacion-lista"></div>
+        </section>
 
-        <button id="btn-next" class="btn-next" onclick="irAlSiguienteAño()">CONTINUAR</button>
+        <!-- Continuar (modo individual) -->
+        <button id="btn-next" class="btn-next" type="button">CONTINUAR</button>
     </div>
+
+    <!-- Espera a los demás jugadores (multijugador) -->
+    <div id="espera-overlay" class="espera-overlay" hidden aria-live="polite">
+        <p id="espera-texto" class="espera-texto">⏳ Esperando jugadores…</p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="config_firebase.js"></script>
+    <script src="multijugador.js"></script>
     <script src="motor_juego.js"></script>
 </body>
 </html>

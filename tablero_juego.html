@@ -5,73 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fortuna Familiar - En Vivo</title>
     <link rel="stylesheet" href="style_tablero.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-pagina="tablero">
 
-    <div class="game-container">
+    <div class="game-container" id="tablero-juego">
         <header class="game-header card-glass">
             <div class="player-info">
-                <div class="mini-avatar"></div>
+                <div id="mini-avatar-emoji" class="mini-avatar"></div>
                 <div>
                     <p class="label">Capital Actual</p>
                     <h2 id="balance" class="amount">$10,000</h2>
                 </div>
             </div>
             <div class="game-stats">
-                <p class="label">Año 1/10</p>
+                <p id="year-display" class="label">Año 1/10</p>
                 <div id="timer-seconds" class="timer">30s</div>
             </div>
         </header>
 
+        <!-- Estado multijugador: jugadores listos -->
+        <p id="mp-status" class="mp-status card-glass" hidden aria-live="polite"></p>
+
         <section class="news-section card-glass border-glow">
             <div class="news-badge">BREAKING NEWS</div>
-            <h3 id="news-text">"Rumores de escasez de semiconductores por tensiones en el Pacífico"</h3>
-            <p class="news-hint">¿Cómo reaccionará el mercado este año?</p>
+            <h3 id="news-text">Cargando noticia del mercado…</h3>
+            <p class="news-hint">¿Cómo reaccionará cada activo este año?</p>
         </section>
 
-        <main class="assets-grid">
-            <div class="asset-card card-glass tech">
-                <div class="asset-icon">💻</div>
-                <h4>Tecnología</h4>
-                <div class="allocation-info">
-                    <span id="tech-pct">0%</span>
-                </div>
-                <input type="range" class="slider" min="0" max="100" value="0">
-            </div>
-
-            <div class="asset-card card-glass food">
-                <div class="asset-icon">🍎</div>
-                <h4>Alimentos</h4>
-                <div class="allocation-info">
-                    <span id="food-pct">0%</span>
-                </div>
-                <input type="range" class="slider" min="0" max="100" value="0">
-            </div>
-
-            <div class="asset-card card-glass energy">
-                <div class="asset-icon">🚀</div>
-                <h4>Energía</h4>
-                <div class="allocation-info">
-                    <span id="energy-pct">0%</span>
-                </div>
-                <input type="range" class="slider" min="0" max="100" value="0">
-            </div>
-
-            <div class="asset-card card-glass realestate">
-                <div class="asset-icon">🏠</div>
-                <h4>Propiedades</h4>
-                <div class="allocation-info">
-                    <span id="re-pct">0%</span>
-                </div>
-                <input type="range" class="slider" min="0" max="100" value="0">
-            </div>
-        </main>
+        <!-- Tarjetas generadas por motor_juego.js a partir de ASSETS -->
+        <main id="assets-grid" class="assets-grid" aria-label="Activos de inversión"></main>
 
         <footer class="game-footer">
-            <button class="btn btn-primary btn-confirm">CONFIRMAR ESTRATEGIA</button>
-        </div>
+            <!-- Resumen de asignación en vivo -->
+            <section class="resumen card-glass" aria-live="polite">
+                <div class="resumen-fila">
+                    <span>Asignado: <strong id="total-asignado">$0.00</strong></span>
+                    <span>Disponible: <strong id="efectivo-restante">$10,000.00</strong></span>
+                </div>
+                <div id="barra-progreso" class="barra-progreso"
+                     role="progressbar" aria-label="Porcentaje del capital asignado">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+            </section>
+
+            <button id="btn-invertir" class="btn btn-primary btn-confirm" type="button" disabled>
+                CONFIRMAR ESTRATEGIA
+            </button>
+        </footer>
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="config_firebase.js"></script>
+    <script src="multijugador.js"></script>
     <script src="motor_juego.js"></script>
 </body>
 </html>

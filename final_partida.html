@@ -5,73 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fortuna Familiar - ¡Fin de la Partida!</title>
     <link rel="stylesheet" href="style_final.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-pagina="final">
 
-    <div class="final-container">
+    <div class="final-container" id="final-partida">
         <header class="final-header">
             <h1 class="end-title">¡PARTIDA<br><span>FINALIZADA!</span></h1>
             <p class="end-subtitle">Resultados después de 10 años de especulación</p>
         </header>
 
-        <section class="podium-section card-glass">
-            <h3 class="section-title">El Podio Familiar</h3>
-            
-            <div class="podium-item rank-1">
-                <div class="rank-badge gold">1</div>
-                <div class="avatar-circle av-winner"></div>
-                <div class="player-details">
-                    <p class="player-name">Hermano Mayor</p>
-                    <p class="final-wealth profit">$41,200</p>
+        <!-- Estadísticas personales -->
+        <section class="stats-section card-glass">
+            <h3 class="section-title">Tu Desempeño</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p class="stat-label">Capital Inicial</p>
+                    <p id="stat-capital-inicial" class="stat-value">$10,000</p>
                 </div>
-                <div class="trophy-icon">🏆</div>
-            </div>
-
-            <div class="podium-item rank-2">
-                <div class="rank-badge silver">2</div>
-                <div class="avatar-circle"></div>
-                <div class="player-details">
-                    <p class="player-name">Papá (Tú)</p>
-                    <p class="final-wealth profit">$32,500</p>
+                <div class="stat-card">
+                    <p class="stat-label">Capital Final</p>
+                    <p id="stat-capital-final" class="stat-value">$0.00</p>
                 </div>
-            </div>
-
-            <div class="podium-item rank-3">
-                <div class="rank-badge bronze">3</div>
-                <div class="avatar-circle"></div>
-                <div class="player-details">
-                    <p class="player-name">Cuñado Juan</p>
-                    <p class="final-wealth profit">$21,900</p>
+                <div class="stat-card">
+                    <p class="stat-label">Rendimiento Total</p>
+                    <p id="stat-rendimiento" class="stat-value">+0%</p>
+                </div>
+                <div class="stat-card" id="card-mejor-ronda">
+                    <p class="stat-label">Mejor Ronda</p>
+                    <p id="stat-mejor-ronda" class="stat-value">—</p>
                 </div>
             </div>
         </section>
 
-        <section class="profiles-section card-glass">
-            <h3 class="section-title">Tus Diplomas de Inversor</h3>
-            
-            <div class="profile-card">
-                <div class="profile-icon">🛡️</div>
-                <div class="profile-text">
-                    <h4>El Guardián del Tesoro</h4>
-                    <p>Ganado por: Esposa. Mantuviste el capital seguro con baja volatilidad.</p>
-                </div>
-            </div>
-
+        <!-- Diploma de inversor -->
+        <section class="profile-section card-glass">
+            <h3 class="section-title">Tu Diploma de Inversor</h3>
             <div class="profile-card active">
-                <div class="profile-icon">🐺</div>
+                <div id="perfil-icono" class="profile-icon">📊</div>
                 <div class="profile-text">
-                    <h4>Lobo de Wall Street</h4>
-                    <p>Ganado por: Hermano Mayor. Arriesgaste todo en Energía y ganaste en grande.</p>
+                    <h4 id="perfil-titulo">Calculando…</h4>
+                    <p id="perfil-descripcion">Analizando tu estrategia…</p>
                 </div>
             </div>
+        </section>
+
+        <!-- Podio familiar (solo multijugador) -->
+        <section id="podio-seccion" class="podium-section card-glass" hidden>
+            <h3 class="section-title">El Podio Familiar</h3>
+            <div id="podio-lista"></div>
         </section>
 
         <footer class="final-footer">
-            <button class="btn-restart" onclick="window.location.href='menu_principal.html'">NUEVA PARTIDA</button>
-            <button class="btn-share">COMPARTIR RESULTADOS</button>
-        </div>
+            <button id="btn-nueva-partida" class="btn-restart" type="button">NUEVA PARTIDA</button>
+        </footer>
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="config_firebase.js"></script>
+    <script src="multijugador.js"></script>
     <script src="motor_juego.js"></script>
 </body>
 </html>

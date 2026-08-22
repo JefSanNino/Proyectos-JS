@@ -5,7 +5,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* Importación de fuentes (ya la tienes en el HTML, pero asegúrate de aplicarla) */
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #eef2f3;
@@ -24,6 +23,20 @@ body {
     max-width: 500px;
     width: 90%;
     text-align: center;
+}
+
+.results-header { margin-bottom: 10px; }
+
+.round-title {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    letter-spacing: 1px;
+}
+
+.market-status {
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    font-style: italic;
 }
 
 /* Sección de Noticias */
@@ -51,6 +64,40 @@ body {
     margin: 0;
 }
 
+/* Desglose por activo */
+.sector-breakdown {
+    text-align: left;
+    display: grid;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.sector-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: #fafbfc;
+    border: 1px solid #eef1f4;
+    border-radius: 10px;
+    padding: 9px 12px;
+}
+
+.sector-name {
+    font-size: 0.82rem;
+    color: #34495e;
+    font-weight: 600;
+}
+
+.sector-result {
+    font-weight: 800;
+    font-size: 0.88rem;
+    white-space: nowrap;
+}
+
+.sector-result.positive { color: #27ae60; }
+.sector-result.negative { color: #e74c3c; }
+
 /* Desglose Financiero */
 .balance-contenedor {
     margin: 20px 0;
@@ -75,7 +122,7 @@ body {
     font-size: 1.1rem;
 }
 
-/* Clases dinámicas que usaremos en JS */
+/* Clases dinámicas usadas en JS */
 .resultado--positivo {
     color: #27ae60;
     font-weight: 800;
@@ -93,7 +140,43 @@ body {
     margin-top: 10px;
 }
 
-/* Botón y Footer */
+/* Clasificación en vivo (multijugador) */
+.card-clara {
+    background: #f8fbff;
+    border: 1px solid #e3ecf5;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.clasi-titulo {
+    font-size: 0.9rem;
+    color: #2980b9;
+    margin-bottom: 10px;
+}
+
+.clasi-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #34495e;
+}
+
+.clasi-fila:nth-child(odd) { background: #f1f5f9; }
+
+.clasi-fila.yo {
+    background: #fdf6dd;
+    border: 1px solid #f5dfa0;
+    font-weight: 700;
+}
+
+.clasi-capital { font-weight: 800; }
+
+/* Botón Continuar */
 .btn-next {
     background-color: #2c3e50;
     color: white;
@@ -109,8 +192,34 @@ body {
     background-color: #34495e;
 }
 
-.podio-contenedor {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #7f8c8d;
+/* Overlay de espera (multijugador) */
+.espera-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(44, 62, 80, 0.55);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
 }
+
+.espera-texto {
+    background: white;
+    color: #2c3e50;
+    font-weight: 700;
+    padding: 18px 28px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    animation: respirar 1.6s infinite;
+}
+
+@keyframes respirar { 50% { transform: scale(1.04); } }
+
+.separador {
+    border: none;
+    border-top: 1px solid #e5e9ec;
+}
+
+/* El atributo hidden siempre gana sobre cualquier display de clase */
+[hidden] { display: none !important; }

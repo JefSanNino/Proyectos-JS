@@ -3,56 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fortuna Familiar: juego de inversión con activos reales, noticias de mercado y multijugador en línea.">
     <title>Fortuna Familiar - Menú Principal</title>
     <link rel="stylesheet" href="style_menuPrincipal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-pagina="menu">
 
-    <div class="container">
+    <div class="container" id="menu-principal">
         <header class="main-header">
             <h1 class="logo-title">FORTUNA<br><span>FAMILIAR</span></h1>
             <p class="tagline">Especulación y Estrategia en Tiempo Real</p>
         </header>
 
-        <div class="avatar-selection card-glass">
+        <!-- Recordar al usuario -->
+        <div id="chip-perfil" class="chip-perfil" hidden>
+            👋 <span class="chip-nombre"></span>
+        </div>
+
+        <!-- Selección de perfil -->
+        <section class="avatar-selection card-glass">
             <h3>Selecciona tu Perfil</h3>
             <div class="avatar-grid" id="avatar-grid">
-                
-                <div class="avatar-item active" data-perfil="Papá">
+
+                <div class="avatar-item active" data-perfil="Empresario" data-id="🧔">
                     <div class="avatar-circle">🧔</div>
-                    <span>Papá</span>
+                    <span>Empresario</span>
                 </div>
-                
-                <div class="avatar-item" data-perfil="Hijo">
+
+                <div class="avatar-item" data-perfil="Novato" data-id="👦">
                     <div class="avatar-circle">👦</div>
-                    <span>Hijo</span>
+                    <span>Novato</span>
                 </div>
-                
-                <div class="avatar-item" data-perfil="Hermano">
+
+                <div class="avatar-item" data-perfil="Analista" data-id="👨">
                     <div class="avatar-circle">👨</div>
-                    <span>Hermano</span>
+                    <span>Analista</span>
                 </div>
-                
-                <div class="avatar-item" data-perfil="Cuñado">
-                    <div class="avatar-circle">🧑</div>
-                    <span>Cuñado</span>
+
+                <div class="avatar-item" data-perfil="Trader" data-id="👩‍💼">
+                    <div class="avatar-circle">👩‍💼</div>
+                    <span>Trader</span>
                 </div>
             </div>
-            
-            <input type="text" id="player-name" placeholder="Escribe tu apodo..." class="input-name">
-        </div>
 
-        <div class="menu-actions">
-            <button class="btn btn-primary">CREAR SALA MULTIJUGADOR</button>
-            <button class="btn btn-secondary">UNIRSE A PARTIDA</button>
-            <button class="btn btn-outline">CÓMO JUGAR</button>
-        </div>
+            <input type="text" id="player-name" maxlength="20" autocomplete="off"
+                   placeholder="Escribe tu apodo..." class="input-name">
+        </section>
+
+        <!-- Acciones del menú -->
+        <section class="menu-actions">
+            <button id="btn-jugar-solo" class="btn btn-primary" type="button">▶ JUGAR INDIVIDUAL</button>
+            <button id="btn-crear-sala" class="btn btn-online" type="button">🌐 CREAR SALA EN LÍNEA</button>
+
+            <div class="join-row card-glass">
+                <input type="text" id="input-codigo-sala" class="input-codigo" maxlength="6"
+                       placeholder="CÓDIGO" autocomplete="off" spellcheck="false"
+                       aria-label="Código de la sala a la que unirse">
+                <button id="btn-unirse" class="btn btn-secondary" type="button">UNIRSE</button>
+            </div>
+
+            <button id="btn-como-jugar" class="btn btn-outline" type="button">❓ CÓMO JUGAR</button>
+        </section>
+
+        <!-- Lobby en línea (multijugador.js lo llena al crear/unirse) -->
+        <section id="lobby-seccion" class="card-glass lobby" hidden aria-live="polite">
+            <h3>Lobby de la Sala</h3>
+            <p class="lobby-codigo-label">Comparte este código:</p>
+            <p id="lobby-codigo" class="lobby-codigo">------</p>
+            <div class="lobby-acciones">
+                <button id="btn-copiar-link" class="btn-mini" type="button">🔗 Copiar link de invitación</button>
+            </div>
+            <ul id="lobby-jugadores" class="lobby-jugadores"></ul>
+            <button id="btn-iniciar-partida" class="btn btn-primary" type="button" hidden>🚀 INICIAR PARTIDA</button>
+            <p id="lobby-espera" class="lobby-espera">Esperando a que el anfitrión inicie…</p>
+            <button id="btn-salir-lobby" class="btn-mini salir" type="button">✕ Salir de la sala</button>
+        </section>
 
         <footer class="footer-info">
-            <p>Conectado: <span>Bogotá - En Línea</span></p>
+            <p>Conectado: <span>Bogotá — En Línea</span></p>
+        </footer>
+    </div>
+
+    <!-- Modal CÓMO JUGAR -->
+    <div id="modal-como-jugar" class="modal-overlay" role="dialog" aria-modal="true"
+         aria-labelledby="cj-titulo">
+        <div class="modal-card card-glass">
+            <header class="modal-header">
+                <h2 id="cj-titulo">📖 Cómo Jugar</h2>
+                <button class="modal-cerrar" type="button" data-cerrar-modal
+                        aria-label="Cerrar ayuda">✕</button>
+            </header>
+
+            <div class="modal-body">
+                <h4>🎯 Objetivo</h4>
+                <p>Empiezas con <strong>$10,000</strong> y tienes <strong>10 años</strong> para multiplicarlos.
+                   Cada año el mercado se mueve por una noticia y tú decides dónde poner tu dinero.</p>
+
+                <h4>💼 Los 4 activos</h4>
+                <ul>
+                    <li>💻 <strong>Acciones Tecnológicas</strong> — Riesgo alto. Suben fuerte con buenas noticias tech y caen en picada con escándalos.</li>
+                    <li>🌾 <strong>Materias Primas</strong> — Riesgo medio-alto. Oro, petróleo y granos suben en crisis y guerras; caen en tiempos de paz.</li>
+                    <li>🏠 <strong>Bienes Raíces</strong> — Riesgo medio-bajo. Crecen lento pero aguantan mejor las tormentas.</li>
+                    <li>🏦 <strong>Bonos del Estado</strong> — Riesgo bajo. El refugio clásico: rinden poco, pero brillan cuando todo lo demás cae.</li>
+                </ul>
+
+                <h4>📰 Las noticias mueven el mercado</h4>
+                <p>Cada año aparece una noticia que golpea o impulsa activos específicos.
+                   En los resultados verás el indicador <strong>⚡</strong> cuando un activo fue movido
+                   directamente por la noticia, y <strong>~</strong> cuando solo tuvo ruido normal de mercado.</p>
+                <p><em>Dato clave:</em> cuando hay pánico, los inversionistas corren hacia los bonos 🏦
+                   y las materias primas 🌾. ¡Aprende a leerlo!</p>
+
+                <h4>💰 Cómo invertir</h4>
+                <p>Escribe el monto en dólares para cada activo o usa los botones rápidos
+                   (<strong>+$100</strong>, <strong>+$500</strong>, <strong>MAX</strong>).
+                   Tienes 30 segundos. El efectivo que no inviertas se conserva intacto.</p>
+
+                <h4>🌐 Multijugador en línea</h4>
+                <ol>
+                    <li>El anfitrión pulsa <strong>CREAR SALA EN LÍNEA</strong> y recibe un código de 6 letras.</li>
+                    <li>Los demás escriben ese código (o abren el link de invitación) y pulsan <strong>UNIRSE</strong>.</li>
+                    <li>Cuando todos estén en el lobby, el anfitrión inicia la partida.</li>
+                    <li>Todos juegan la misma noticia al mismo tiempo; el podio se actualiza en vivo tras cada año.</li>
+                </ol>
+
+                <h4>🏆 Consejos de inversor</h4>
+                <ul>
+                    <li>Diversificar reduce el riesgo: no pongas todo en un solo activo.</li>
+                    <li>¿Noticia mala? Los bonos suelen ser puerto seguro.</li>
+                    <li>Guerras e inflación históricamente favorecen las materias primas.</li>
+                    <li>Baja de tasas = buen momento para acciones y bonos.</li>
+                </ul>
+            </div>
+
+            <footer class="modal-footer">
+                <button class="btn btn-primary" type="button" data-cerrar-modal>¡ENTENDIDO!</button>
+            </footer>
         </div>
     </div>
+
+    <!-- Firebase (SDKs oficiales vía CDN) + configuración + multijugador + motor -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="config_firebase.js"></script>
+    <script src="multijugador.js"></script>
     <script src="motor_juego.js"></script>
 </body>
 </html>
