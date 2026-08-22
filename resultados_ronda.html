@@ -15,46 +15,37 @@
             <p class="market-status">El mercado ha reaccionado...</p>
         </header>
 
-        <div class="performance-card card-glass">
-            <p class="label">Nuevo Balance</p>
-            <h2 id="final-balance" class="profit">$11,240</h2>
-            <div class="gain-badge">+ $1,240 (12.4%)</div>
-        </div>
+        <!-- Sección de Noticia con Explicación -->
+        <section class="noticia-contenedor">
+            <h2 id="titular-noticia" class="noticia__titular">Cargando noticia...</h2>
+            <p id="explicacion-noticia" class="noticia__descripcion">Aquí aparecerá el porqué de la variación del mercado.</p>
+        </section>
 
-        <section class="breakdown-section">
-            <h3 class="section-title">Rendimiento por Sector</h3>
-            
-            <div class="asset-result card-glass">
-                <div class="asset-info">
-                    <span class="icon">💻</span>
-                    <div>
-                        <p class="asset-name">Tecnología</p>
-                        <p class="delta-news">Subida por alta demanda</p>
-                    </div>
-                </div>
-                <div class="asset-math plus">+15%</div>
-            </div>
+        <hr class="separador">
 
-            <div class="asset-result card-glass">
-                <div class="asset-info">
-                    <span class="icon">🍎</span>
-                    <div>
-                        <p class="asset-name">Alimentos</p>
-                        <p class="delta-news">Caída por regulaciones</p>
-                    </div>
-                </div>
-                <div class="asset-math minus">-8%</div>
+        <!-- Sección de Desglose Financiero -->
+        <section class="balance-contenedor">
+            <div class="balance__item">
+                <span>Capital Anterior:</span>
+                <span id="capital-anterior">$0.00</span>
             </div>
             
-            </section>
-
-        <div class="mini-leaderboard card-glass">
-            <h4>Líder de la Ronda:</h4>
-            <div class="leader-row">
-                <div class="leader-avatar"></div>
-                <span id="leader-info">Cargando...</span>
+            <!-- Este es el nuevo campo clave que pediste -->
+            <div id="contenedor-resultado-neto" class="balance__resultado">
+                <span id="etiqueta-resultado">Resultado de la ronda:</span>
+                <span id="valor-resultado-neto">$0.00</span>
             </div>
-        </div>
+
+            <div class="balance__total">
+                <span>Nuevo Balance Total:</span>
+                <span id="capital-actual">$0.00</span>
+            </div>
+        </section>
+
+        <!-- Sección del Jugador (Podio) -->
+        <footer class="podio-contenedor">
+            <p class="podio__texto">Jugador actual: <strong id="nombre-jugador-display">---</strong></p>
+        </footer>
 
         <button id="btn-next" class="btn-next" onclick="irAlSiguienteAño()">CONTINUAR</button>
     </div>
