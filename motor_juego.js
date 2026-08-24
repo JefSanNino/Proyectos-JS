@@ -831,7 +831,7 @@ async function inicializarResultados() {
 
                 const nombre = document.createElement('span');
                 nombre.className = 'sector-name';
-                nombre.textContent = `${d.emoji} ${d.nombre}: ${formatMoney(d.monto)} ${d.afectado ? '⚡' : '~'} (${((d.efecto - 1) * 100 >= 0 ? '+' : '')}{((d.efecto - 1) * 100).toFixed(1)}%)`;
+                nombre.textContent = `${d.emoji} ${d.nombre}: ${formatMoney(d.monto)} ${d.afectado ? '⚡' : '~'} (${((d.efecto - 1) * 100 >= 0 ? '+' : '')}${((d.efecto - 1) * 100).toFixed(1)}%)`;
 
                 const resultado = document.createElement('span');
                 resultado.className = `sector-result ${d.neto >= 0 ? 'positive' : 'negative'}`;

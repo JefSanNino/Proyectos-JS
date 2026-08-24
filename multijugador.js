@@ -137,6 +137,12 @@ window.FortunaMulti = (function () {
         return salida;
     }
 
+    /** Confirmación de ronda de un jugador (-1 = sin confirmar; OJO: 0 es válido) */
+    function confirmacionDe(jugador) {
+        const v = Number(jugador.rondaConfirmada);
+        return Number.isFinite(v) ? v : -1;
+    }
+
     // ---------- Documento del jugador ----------
     function refMiJugador(codigo) {
         return db.collection('salas').doc(codigo).collection('jugadores').doc(uidActual);
@@ -340,7 +346,7 @@ window.FortunaMulti = (function () {
         if (cacheJugadores.length === 0) return;
 
         const ronda = cacheSala.rondaActual;
-        const todos = cacheJugadores.every(j => (Number(j.rondaConfirmada) || -1) >= ronda);
+        const todos = cacheJugadores.every(j => confirmacionDe(j) >= ronda);
         if (!todos) return;
 
         if (temporizadorAvance) clearTimeout(temporizadorAvance);
@@ -473,7 +479,7 @@ window.FortunaMulti = (function () {
     function actualizarListos(elemento) {
         elementoListosUI = elemento || elementoListosUI;
         if (!elementoListosUI || !cacheSala) return;
-        const listos = cacheJugadores.filter(j => (Number(j.rondaConfirmada) || -1) >= cacheSala.rondaActual).length;
+        const listos = cacheJugadores.filter(j => confirmacionDe(j) >= cacheSala.rondaActual).length;
         elementoListosUI.hidden = false;
         elementoListosUI.textContent = `👥 Jugadores listos: ${listos}/${cacheJugadores.length}`;
     }
