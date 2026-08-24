@@ -24,28 +24,33 @@
 
         <!-- Selección de perfil -->
         <section class="avatar-selection card-glass">
-            <h3>Selecciona tu Perfil</h3>
-            <div class="avatar-grid" id="avatar-grid">
+            <h2>Selecciona tu Perfil</h2>
+            <div class="avatar-grid" id="avatar-grid" role="radiogroup"
+                 aria-label="Perfil de jugador">
 
-                <div class="avatar-item active" data-perfil="Empresario" data-id="🧔">
+                <button type="button" class="avatar-item active" data-perfil="Empresario" data-id="🧔"
+                        role="radio" aria-checked="true">
                     <div class="avatar-circle">🧔</div>
                     <span>Empresario</span>
-                </div>
+                </button>
 
-                <div class="avatar-item" data-perfil="Novato" data-id="👦">
+                <button type="button" class="avatar-item" data-perfil="Novato" data-id="👦"
+                        role="radio" aria-checked="false">
                     <div class="avatar-circle">👦</div>
                     <span>Novato</span>
-                </div>
+                </button>
 
-                <div class="avatar-item" data-perfil="Analista" data-id="👨">
+                <button type="button" class="avatar-item" data-perfil="Analista" data-id="👨"
+                        role="radio" aria-checked="false">
                     <div class="avatar-circle">👨</div>
                     <span>Analista</span>
-                </div>
+                </button>
 
-                <div class="avatar-item" data-perfil="Trader" data-id="👩‍💼">
+                <button type="button" class="avatar-item" data-perfil="Trader" data-id="👩‍💼"
+                        role="radio" aria-checked="false">
                     <div class="avatar-circle">👩‍💼</div>
                     <span>Trader</span>
-                </div>
+                </button>
             </div>
 
             <input type="text" id="player-name" maxlength="20" autocomplete="off"
@@ -69,7 +74,7 @@
 
         <!-- Lobby en línea (multijugador.js lo llena al crear/unirse) -->
         <section id="lobby-seccion" class="card-glass lobby" hidden aria-live="polite">
-            <h3>Lobby de la Sala</h3>
+            <h2>Lobby de la Sala</h2>
             <p class="lobby-codigo-label">Comparte este código:</p>
             <p id="lobby-codigo" class="lobby-codigo">------</p>
             <div class="lobby-acciones">

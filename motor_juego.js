@@ -377,7 +377,9 @@ function inicializarMenuPrincipal() {
     }
     if (perfil.avatarPerfil) {
         avatarItems.forEach(a => {
-            a.classList.toggle('active', a.dataset.perfil === perfil.avatarPerfil);
+            const activo = a.dataset.perfil === perfil.avatarPerfil;
+            a.classList.toggle('active', activo);
+            a.setAttribute('aria-checked', String(activo));
         });
     }
     if (chipPerfil && perfil.nombreUsuario) {
@@ -388,8 +390,12 @@ function inicializarMenuPrincipal() {
     // --- Selección de avatar (guarda en el perfil) ---
     avatarItems.forEach(item => {
         item.addEventListener('click', () => {
-            avatarItems.forEach(a => a.classList.remove('active'));
+            avatarItems.forEach(a => {
+                a.classList.remove('active');
+                a.setAttribute('aria-checked', 'false');
+            });
             item.classList.add('active');
+            item.setAttribute('aria-checked', 'true');
             guardarPerfil({ avatarPerfil: item.dataset.perfil, avatarEmoji: item.dataset.id });
         });
     });
@@ -477,7 +483,7 @@ function inicializarMenuPrincipal() {
             'Para jugar en línea necesitas conectar Firebase (gratis):\n\n' +
             '1. Crea un proyecto en console.firebase.google.com\n' +
             '2. Activa Firestore y Autenticación anónima\n' +
-            '3. Copia tu configuración en js/config_firebase.js\n\n' +
+            '3. Copia tu configuración en config_firebase.js\n\n' +
             'Guía completa en el README del proyecto.\n' +
             'Mientras tanto puedes jugar en modo individual.'
         );
@@ -616,6 +622,9 @@ async function inicializarTablero() {
             b.type = 'button';
             b.className = 'quick-btn';
             b.textContent = texto;
+            if (modo === 'limpiar') {
+                b.setAttribute('aria-label', `Limpiar monto de ${a.nombre}`);
+            }
             b.addEventListener('click', () => aplicarQuick(clave, modo, cant));
             quick.appendChild(b);
         });
@@ -677,6 +686,9 @@ async function inicializarTablero() {
         if (progressFill && barraProgreso) {
             const pct = Math.min(100, (total / contexto.capital) * 100);
             progressFill.style.width = pct + '%';
+            barraProgreso.setAttribute('aria-valuemin', '0');
+            barraProgreso.setAttribute('aria-valuemax', '100');
+            barraProgreso.setAttribute('aria-valuenow', String(Math.round(pct)));
             progressFill.classList.toggle('over-limit', excede);
             progressFill.classList.toggle('full', !excede && total === contexto.capital);
             barraProgreso.classList.toggle('over-limit', excede);

@@ -11,15 +11,17 @@ Juego de inversión estático en JavaScript vanilla (sin framework). Todo el tex
 
 El juego enseña relaciones económicas reales en las descripciones de noticias (subida de tasas ↔ bonos caen, guerra ↔ petróleo sube) y clasifica al jugador con un perfil de inversor al terminar.
 
-## Verificación (no hay build ni tests)
+## Verificación (suite propia, sin build)
 
 No existe `package.json`, linter ni suite de tests. Para verificar cambios:
 
 ```bash
-node --check motor_juego.js && node --check multijugador.js && node --check config_firebase.js
+node pruebas/pruebas_fortuna.js
 ```
 
-Para probar la lógica pura sin navegador: cargar `motor_juego.js` en una VM de Node con stubs de `document`/`localStorage`/`sessionStorage` y usar el global expuesto `window.FortunaJuego` (expone ASSETS, poolNoticias, efectosDeRonda, calcularRonda, etc.). La verificación de IDs es cruzar los `getElementById()` de los JS contra los `id=` de los HTML.
+La suite (30 verificaciones, Node puro, sin dependencias) cubre: sintaxis de los 3 JS, motor en VM de Node (noticias, determinismo PRNG, conservación de dinero, sanitización XSS, códigos de sala), regresiones de sincronización multijugador (bugs del 2026-08-23 congelados como casos), integridad de IDs JS↔HTML y estructura/accesibilidad mínima. Ejecutarla tras CUALQUIER cambio es obligatorio.
+
+Para depurar la lógica pura sin navegador: cargar `motor_juego.js` en una VM de Node con stubs de `document`/`localStorage`/`sessionStorage` y usar el global expuesto `window.FortunaJuego` (expone ASSETS, poolNoticias, efectosDeRonda, calcularRonda, etc.).
 
 ## Arquitectura mínima
 

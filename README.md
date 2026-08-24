@@ -53,6 +53,18 @@ python3 -m http.server 8080
 El **modo individual funciona sin configurar nada**. El modo en línea
 requiere Firebase (siguiente sección).
 
+### 🧪 Pruebas
+
+La lógica del juego está cubierta por una suite propia (Node puro, sin dependencias):
+
+```bash
+node pruebas/pruebas_fortuna.js
+```
+
+Verifica sintaxis, determinismo del mercado, conservación exacta del dinero,
+seguridad anti-XSS, regresiones de sincronización multijugador, integridad de
+IDs JS↔HTML y accesibilidad mínima. Sale con código `0` si todo pasa.
+
 ## 🔥 Activar el modo en línea (Firebase, gratis)
 
 1. Crea un proyecto en [console.firebase.google.com](https://console.firebase.google.com).

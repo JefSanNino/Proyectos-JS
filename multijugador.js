@@ -433,7 +433,13 @@ window.FortunaMulti = (function () {
 
         const btnSalir = document.getElementById('btn-salir-lobby');
         if (btnSalir) {
-            btnSalir.onclick = () => salirDeSala().finally(() => window.location.reload());
+            btnSalir.onclick = () => {
+                const mensaje = esHostFlag
+                    ? '¿Salir de la sala? Como anfitrión, la sala se cerrará y los demás jugadores serán expulsados.'
+                    : '¿Salir de la sala?';
+                if (!window.confirm(mensaje)) return;
+                salirDeSala().finally(() => window.location.reload());
+            };
         }
 
         renderizarLobbySiVisible();

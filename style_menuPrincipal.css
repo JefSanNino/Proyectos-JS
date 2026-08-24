@@ -100,6 +100,12 @@ body {
 
 .avatar-item {
     cursor: pointer;
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    border-radius: 16px;
 }
 
 /* Efecto Hover (al pasar el mouse) */
@@ -130,7 +136,6 @@ body {
     background: rgba(15, 23, 42, 0.8);
     color: white;
     text-align: center;
-    outline: none;
 }
 
 .menu-actions {
@@ -211,7 +216,6 @@ body {
     background: rgba(15, 23, 42, 0.9);
     color: #60a5fa;
     text-align: center;
-    outline: none;
     font-weight: 800;
     letter-spacing: 6px;
     font-size: 1.05rem;
@@ -220,7 +224,7 @@ body {
 
 .input-codigo::placeholder {
     letter-spacing: 2px;
-    color: #475569;
+    color: #64748b;
 }
 
 .input-codigo:focus {
@@ -368,3 +372,32 @@ body {
 
 /* El atributo hidden siempre gana sobre cualquier display de clase */
 [hidden] { display: none !important; }
+
+/* ---- Accesibilidad global (WCAG 2.2 AA) ---- */
+
+/* Foco de teclado siempre visible */
+:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 2px;
+}
+
+/* Respetar a usuarios sensibles al movimiento */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Contenido solo para lectores de pantalla */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
