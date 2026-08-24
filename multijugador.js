@@ -42,9 +42,10 @@ window.FortunaMulti = (function () {
     let temporizadorAvance = null;
     let navegando = false;
 
-    // ---------- Claves de espejo (sessionStorage) ----------
+    // ---------- Claves de espejo (sessionStorage/localStorage) ----------
     const CLAVE_MIRROR_SALA = 'fortunaCacheSala';
     const CLAVE_MIRROR_MI = 'fortunaCacheMi';
+    const CLAVE_ULTIMA_NAV = 'fortunaUltimaNavegacion';
 
     function guardarEspejos() {
         try {
@@ -99,6 +100,25 @@ window.FortunaMulti = (function () {
         });
     }
 
+    /**
+     * Espera a que estén disponibles AMBOS datos (documento de la sala Y el
+     * propio documento de jugador). Evita la carrera en la que la página
+     * arranca con sala cargada pero jugadores aún vacíos.
+     * Devuelve { sala, mi } o null si venció el tope.
+     */
+    function esperarTodo(topeMs = 6000) {
+        if (cacheSala && miJugador) return Promise.resolve({ sala: cacheSala, mi: miJugador });
+        return new Promise(resolver => {
+            const t0 = Date.now();
+            const intervalo = setInterval(() => {
+                if ((cacheSala && miJugador) || Date.now() - t0 > topeMs) {
+                    clearInterval(intervalo);
+                    resolver(cacheSala && miJugador ? { sala: cacheSala, mi: miJugador } : null);
+                }
+            }, 100);
+        });
+    }
+
     // ---------- Utilidades ----------
     function paginaActual() {
         return document.body ? document.body.getAttribute('data-pagina') : null;
@@ -106,6 +126,16 @@ window.FortunaMulti = (function () {
 
     function navegar(url) {
         if (navegando) return;
+        // Blindaje anti-bucle: si la última navegación fue hace menos de
+        // 1.5 s (marca persistente entre recargas), suprimir y romper ciclos.
+        try {
+            const previa = Number(localStorage.getItem(CLAVE_ULTIMA_NAV)) || 0;
+            if (Date.now() - previa < 1500) {
+                console.warn('⏸ Navegación suprimida por protección anti-bucle:', url);
+                return;
+            }
+            localStorage.setItem(CLAVE_ULTIMA_NAV, String(Date.now()));
+        } catch (e) { /* almacenamiento no disponible: navegar normal */ }
         navegando = true;
         window.location.href = url;
     }
@@ -561,6 +591,8 @@ window.FortunaMulti = (function () {
         obtenerCacheSala: () => cacheSala,
         obtenerMiJugador: () => miJugador,
         esperarSala,
+        esperarTodo,
+        navegarA: navegar,
         actualizarListosUI: actualizarListos,
         salirDeSala
     };

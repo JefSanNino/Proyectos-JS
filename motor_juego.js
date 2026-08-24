@@ -509,18 +509,19 @@ async function inicializarTablero() {
     let contexto = null; // {noticias, indiceRonda, capital, semillaBase}
 
     if (esOnline) {
-        // Espera la primera instantánea de la sala (evita carreras al navegar)
-        const snap = await window.FortunaMulti.esperarSala();
-        if (!snap || snap.estado !== 'jugando') {
+        // Espera AMBAS instantáneas (sala + mi jugador) para evitar carreras
+        // al navegar y no renderizar nunca un capital equivocado.
+        const datos = await window.FortunaMulti.esperarTodo();
+        if (!datos || datos.sala.estado !== 'jugando') {
             window.location.href = 'menu_principal.html';
             return;
         }
         contexto = {
             online: true,
             codigo: codigoSala,
-            noticias: snap.noticias,
-            indiceRonda: snap.rondaActual,
-            capital: (window.FortunaMulti.obtenerMiJugador() || {}).capital ?? CAPITAL_INICIAL,
+            noticias: datos.sala.noticias,
+            indiceRonda: datos.sala.rondaActual,
+            capital: datos.mi.capital ?? CAPITAL_INICIAL,
             semillaBase: codigoSala
         };
     } else {
@@ -714,7 +715,7 @@ async function inicializarTablero() {
                     resultado,
                     capitalAnterior: contexto.capital
                 });
-                window.location.href = `resultados_ronda.html?sala=${contexto.codigo}`;
+                window.FortunaMulti.navegarA(`resultados_ronda.html?sala=${contexto.codigo}`);
             } else {
                 const estado = obtenerEstadoPartida();
                 estado.resultadoUltima = { ...resultado, año: estado.añoActual };
@@ -757,11 +758,11 @@ async function inicializarTablero() {
         window.FortunaMulti.alCambiarSala(snap => {
             if (!snap) return;
             if (snap.estado === 'finalizada') {
-                window.location.href = `final_partida.html?sala=${contexto.codigo}`;
+                window.FortunaMulti.navegarA(`final_partida.html?sala=${contexto.codigo}`);
             } else if (snap.rondaActual > contexto.indiceRonda) {
                 // Otro jugador avanzó la ronda antes de que confirmaras:
                 // te quedaste atrás, vuelve al tablero con la ronda nueva.
-                window.location.href = `tablero_juego.html?sala=${contexto.codigo}`;
+                window.FortunaMulti.navegarA(`tablero_juego.html?sala=${contexto.codigo}`);
             }
         });
         window.FortunaMulti.actualizarListosUI(statusMp);
@@ -851,7 +852,7 @@ async function inicializarResultados() {
         if (clasificacionSeccion) clasificacionSeccion.hidden = false;
         if (esperaOverlay) esperaOverlay.hidden = false;
 
-        await window.FortunaMulti.esperarSala();
+        await window.FortunaMulti.esperarTodo();
         const miSnap = window.FortunaMulti.obtenerMiJugador();
         const salaSnap = window.FortunaMulti.obtenerCacheSala();
         if (!miSnap || !salaSnap) {
@@ -895,13 +896,16 @@ async function inicializarResultados() {
 
         window.FortunaMulti.pintarClasificacion(pintarClasificacion);
 
-        // Avance de ronda / finalización
+        // Avance de ronda / finalización.
+        // La comparación es contra la ronda que YO completé (rondaConfirmada),
+        // no contra la instantánea con la que cargó esta página: si llegué
+        // tarde y la sala ya avanzó, igual debo saltar al tablero nuevo.
         window.FortunaMulti.alCambiarSala(sala => {
             if (!sala) return;
             if (sala.estado === 'finalizada') {
-                window.location.href = `final_partida.html?sala=${codigoSala}`;
-            } else if (sala.rondaActual > salaSnap.rondaActual) {
-                window.location.href = `tablero_juego.html?sala=${codigoSala}`;
+                window.FortunaMulti.navegarA(`final_partida.html?sala=${codigoSala}`);
+            } else if (sala.rondaActual > miSnap.rondaConfirmada) {
+                window.FortunaMulti.navegarA(`tablero_juego.html?sala=${codigoSala}`);
             }
         });
     } else {
